@@ -18,8 +18,8 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         MainWindow.setFont(font)
-        icon = QtGui.QIcon() 
-        icon.addPixmap(QtGui.QPixmap("..CCC151- SSIS V2/winIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../CCC151-V1 Simple-Student-Information-System/winIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("background-color: #f6fafd\n"
 "")
@@ -84,7 +84,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QComboBox::down-arrow {\n"
-"    image: url(D:\Documents\codes\python\CCC151- SSIS V2\down-arrow.png);\n"
+"    image: url(D:/Documents/codes/python/CCC151- SSIS V2/down-arrow.png);\n"
 "    width: 15px;  \n"
 "    height: 15px;\n"
 "}\n"
@@ -246,7 +246,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QComboBox::down-arrow {\n"
-"    image: url(D:\Documents\codes\python\CCC151- SSIS V2\down-arrow.png);\n"
+"    image: url(D:/Documents/codes/python/CCC151- SSIS V2/down-arrow.png);\n"
 "    width: 15px;  \n"
 "    height: 15px;\n"
 "}\n"
@@ -308,7 +308,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QComboBox::down-arrow {\n"
-"    image: url(D:\Documents\codes\python\CCC151- SSIS V2\down-arrow.png);\n"
+"    image: url(D:/Documents/codes/python/CCC151- SSIS V2/down-arrow.png);\n"
 "    width: 15px;  \n"
 "    height: 15px;\n"
 "}\n"
@@ -872,7 +872,7 @@ class Ui_MainWindow(object):
         self.label_Courses.setText(_translate("MainWindow", "Courses"))
         self.label_CourseCode.setText(_translate("MainWindow", "Course Code:"))
         self.enterCode.setPlaceholderText(_translate("MainWindow", "  Enter code"))
-        self.searchInputStudent.setPlaceholderText(_translate("MainWindow", "  Search student or ID number..."))
+        self.searchInputStudent.setPlaceholderText(_translate("MainWindow", "  Search student..."))
         self.searchStudentButton.setText(_translate("MainWindow", "Search"))
         self.deleteStudentButton.setText(_translate("MainWindow", "Delete"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Student List"))
