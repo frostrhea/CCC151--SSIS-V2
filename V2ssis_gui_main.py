@@ -185,25 +185,24 @@ class MainWindow(QtWidgets.QMainWindow):
         column = index.column()
         item = self.gui_ssis.CourseTable.model().item(row, column)
         current_value = item.text()
-        unique_key = current_value
+        unique_key = self.gui_ssis.CourseTable.model().item(row, 0).text() 
         new_value, ok = QtWidgets.QInputDialog.getText(self, "Update Course", "Enter new text:", text=current_value)
         
-        if ok and new_value:
-            if new_value != current_value:
-                reply = QtWidgets.QMessageBox.question(self, "Save Changes", "Do you want to save the changes?", 
-                                                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
-                if reply == QtWidgets.QMessageBox.Yes:
-                    if column == 0:
-                        self.courseObject.updateCourse(current_value, unique_key, column, new_value)
-                        self.setStandardItemModel()
-                        self.gui_ssis.CourseTable.model().layoutChanged.emit()
-                    elif column == 1:
-                        self.courseObject.updateCourse(current_value, unique_key, column, new_value)
-                        self.setStandardItemModel()
-                        self.gui_ssis.CourseTable.model().layoutChanged.emit()
-                        self.setCoursesSelection()
-                else:
-                    pass
+        if ok and new_value and new_value != current_value:
+            reply = QtWidgets.QMessageBox.question(self, "Save Changes", "Do you want to save the changes?", 
+                                                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+            if reply == QtWidgets.QMessageBox.Yes:
+                if column == 0:
+                    self.courseObject.updateCourse(unique_key, column, new_value)
+                    self.setStandardItemModel()
+                    self.gui_ssis.CourseTable.model().layoutChanged.emit()
+                elif column == 1:
+                    self.courseObject.updateCourse(unique_key, column, new_value)
+                    self.setStandardItemModel()
+                    self.gui_ssis.CourseTable.model().layoutChanged.emit()
+                    self.setCoursesSelection()
+            else:
+                pass
 
                 
     def student_table_cell_edit(self, index):
@@ -211,20 +210,34 @@ class MainWindow(QtWidgets.QMainWindow):
         row = index.row()
         item = self.gui_ssis.StudentTable.model().item(row, column)
         current_value = item.text()
-        unique_key = self.gui_ssis.StudentTable.model().item(row, 0).text()  # Assuming Student ID is in the first column
+        unique_key = self.gui_ssis.StudentTable.model().item(row, 0).text()  
 
         new_value, ok = QtWidgets.QInputDialog.getText(self, "Update Student", "Enter new text:", text=current_value)
         if ok and new_value and new_value != current_value:
             reply = QtWidgets.QMessageBox.question(self, "Save Changes", "Do you want to save the changes?",
                                                     QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
             if reply == QtWidgets.QMessageBox.Yes:
-                if column in [0, 1, 2, 3, 4]:
+                if column in [1, 2, 3]:
                     self.studentObject.updateStudent( unique_key, column, new_value)
                     self.setStandardItemModel()
                     self.gui_ssis.StudentTable.model().layoutChanged.emit()
+                elif column in [0]:
+                    if self.studentObject.studentIDExists(new_value) == True:
+                        QtWidgets.QMessageBox.warning(self, "Student ID Exists", "Student ID already exists.")
+                    else:
+                        self.studentObject.updateStudent( unique_key, column, new_value)
+                        self.setStandardItemModel()
+                        self.gui_ssis.StudentTable.model().layoutChanged.emit()
+                elif column in [4]:
+                    if self.courseObject.courseCodeExists(new_value) == False:
+                        QtWidgets.QMessageBox.warning(self, "Course Unavailable", "Course does not exist.")
+                    else:
+                        self.studentObject.updateStudent( unique_key, column, new_value)
+                        self.setStandardItemModel()
+                        self.gui_ssis.StudentTable.model().layoutChanged.emit()    
                 else:
-                    QtWidgets.QMessageBox.warning(self, "Invalid Column", "Invalid column selected.")
-
+                    #QtWidgets.QMessageBox.warning(self, "Invalid Column", "Invalid column selected.")
+                    pass
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

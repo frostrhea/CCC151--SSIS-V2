@@ -88,22 +88,23 @@ class Course:
         return searchResults
     
     # function to update the course name field
-    # since row cannot be identified and obtained directly, the update method uses another methods by 
-    #  obtaining the other unique column data in the same row as the current selected cell (current_value).
-    def updateCourse(self, current_value, uniqueKey, column, new_value):
+    # checks what column is the selected cell and updates the cell accordingly while using the 
+    #     primary key as an identifier of the row
+    def updateCourse(self, unique_key, column, new_value):
         if column == 0:
-            update_query = "UPDATE courses SET `Course Code` = %s WHERE `Course Code` = %s AND `Course` = %s"
-            self.cursor.execute(update_query, (new_value, current_value, self.getCourseName(uniqueKey)))
-            connection.commit()
-            print(f"Course '{current_value}' updated to '{new_value}' successfully.") 
             if self.courseCodeExists(new_value):
                 return False, "Course code already exists."
+            else:
+                update_query = "UPDATE courses SET `Course Code` = %s WHERE `Course Code` = %s" 
         elif column == 1:
-            # Update the course name in the database
-            update_query = "UPDATE courses SET `Course` = %s WHERE `Course Code` = %s AND `Course` = %s"
-            self.cursor.execute(update_query, (new_value, self.getCourseCode(uniqueKey), current_value))
+            update_query = "UPDATE courses SET `Course` = %s WHERE `Course Code` = %s"
+        
+        if update_query:
+            self.cursor.execute(update_query, (new_value, unique_key))
             connection.commit()
-            print(f"Course '{current_value}' updated to '{new_value}' successfully.")  
+            print(f"Row updated successfully: {unique_key}")
+        else:
+            print("Invalid column selected.") 
 
 
     def getCourseCode(self, course_name):
@@ -128,7 +129,9 @@ class Course:
     def courseCodeExists(self, courseCode):
         self.cursor.execute("SELECT `Course Code` FROM courses WHERE `Course Code` = %s", (courseCode,))
         if self.cursor.fetchone():
-            return True
+            return True 
+        else:
+            return False
         
 
 
