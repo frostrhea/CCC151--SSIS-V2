@@ -255,6 +255,8 @@ class StudentInfo():
         if self.cursor.fetchone():
             return True
             
+    def genderExistsInArray(self, new_value):
+        return new_value in self.gender
             
     # array of gender and year_level for selection in GUI
     gender = ['Male', 'Female', 'Non-Binary','Transgender', 'Prefer Not to Say', 'Not Listed']

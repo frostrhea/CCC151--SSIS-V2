@@ -217,13 +217,20 @@ class MainWindow(QtWidgets.QMainWindow):
             reply = QtWidgets.QMessageBox.question(self, "Save Changes", "Do you want to save the changes?",
                                                     QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
             if reply == QtWidgets.QMessageBox.Yes:
-                if column in [1, 2, 3]:
+                if column in [1, 3]:   #need checker on gender
                     self.studentObject.updateStudent( unique_key, column, new_value)
                     self.setStandardItemModel()
                     self.gui_ssis.StudentTable.model().layoutChanged.emit()
                 elif column in [0]:
                     if self.studentObject.studentIDExists(new_value) == True:
                         QtWidgets.QMessageBox.warning(self, "Student ID Exists", "Student ID already exists.")
+                    else:
+                        self.studentObject.updateStudent( unique_key, column, new_value)
+                        self.setStandardItemModel()
+                        self.gui_ssis.StudentTable.model().layoutChanged.emit()
+                elif column in [2]:
+                    if self.studentObject.genderExistsInArray(new_value) == False:
+                        QtWidgets.QMessageBox.warning(self, "Input Error", "Gender not in selection. Please input based on here:\n   Male\n   Female\n   Non-Binary\n   Transgender\n   Prefer Not to Say\n   Not Listed")
                     else:
                         self.studentObject.updateStudent( unique_key, column, new_value)
                         self.setStandardItemModel()
