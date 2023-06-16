@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1106, 760)
+        MainWindow.resize(1106, 740)
         font = QtGui.QFont()
         font.setPointSize(9)
         MainWindow.setFont(font)
@@ -89,9 +89,15 @@ class Ui_MainWindow(object):
 "    height: 15px;\n"
 "}\n"
 "\n"
-"QComboBox::item {\n"
-"    background-color: #e2eff9;\n"
-"    color:  #006fbe;\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid #cce4f5;\n"
+"    border-radius: 6px;\n"
+"    background-color: white;\n"
+"    selection-background-color: #7dbae5;\n"
+"    font: 14px;\n"
+"    color: #006fbe;\n"
+"    font: Helvetica;\n"
+"    box-shadow: none;\n"
 "}\n"
 "\n"
 "")
@@ -190,6 +196,18 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "    min-width: 8em;\n"
 "    padding: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: inset;\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: outset;\n"
 "}")
         self.addStudentButton.setObjectName("addStudentButton")
         self.label_StudentInformation = QtWidgets.QLabel(self.frame)
@@ -251,10 +269,17 @@ class Ui_MainWindow(object):
 "    height: 15px;\n"
 "}\n"
 "\n"
-"QComboBox::item {\n"
-"    background-color: #e2eff9;\n"
-"    color:  #006fbe;\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid #cce4f5;\n"
+"    border-radius: 6px;\n"
+"    background-color: white;\n"
+"    selection-background-color: #7dbae5;\n"
+"    font: 14px;\n"
+"    color: #006fbe;\n"
+"    font: Helvetica;\n"
+"    box-shadow: none;\n"
 "}\n"
+"\n"
 "\n"
 "")
         self.chooseGender.setObjectName("chooseGender")
@@ -313,10 +338,17 @@ class Ui_MainWindow(object):
 "    height: 15px;\n"
 "}\n"
 "\n"
-"QComboBox::item {\n"
-"    background-color: #e2eff9;\n"
-"    color:  #006fbe;\n"
+"QComboBox QAbstractItemView {\n"
+"    border: 1px solid #cce4f5;\n"
+"    border-radius: 6px;\n"
+"    background-color: white;\n"
+"    selection-background-color: #7dbae5;\n"
+"    font: 14px;\n"
+"    color: #006fbe;\n"
+"    font: Helvetica;\n"
+"    box-shadow: none;\n"
 "}\n"
+"\n"
 "\n"
 "")
         self.chooseYearLvl.setObjectName("chooseYearLvl")
@@ -347,6 +379,18 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "    min-width: 8em;\n"
 "    padding: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: inset;\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: outset;\n"
 "}")
         self.addCourseButton.setObjectName("addCourseButton")
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.frame_2)
@@ -446,14 +490,13 @@ class Ui_MainWindow(object):
         font.setFamily("Helvetica")
         self.tabWidget.setFont(font)
         self.tabWidget.setAutoFillBackground(False)
-        self.tabWidget.setStyleSheet("QTabWidget::pane { /* The tab widget frame */\n"
+        self.tabWidget.setStyleSheet("QTabWidget::pane {\n"
 "    border-top: 2px solid #006fbe;\n"
-"    background-color: #cce4f5;\n"
 "\n"
 "}\n"
 "\n"
 "QTabWidget::tab-bar {\n"
-"    left: 5px; /* move to the right by 5px */\n"
+"    left: 5px; \n"
 "}\n"
 "\n"
 "/* Style the tab using the tab sub-control. Note that\n"
@@ -484,7 +527,16 @@ class Ui_MainWindow(object):
 "    margin-top: 3px; /* make non-selected tabs look smaller */\n"
 "    background-color: #b5d8f0;\n"
 "    border-color: #9B9B9B;\n"
-"}")
+"}\n"
+"\n"
+"QTabBar::tab::hover {\n"
+"    background-color: #7dbae5;\n"
+"\n"
+"    border-top-left-radius: 6px;\n"
+"    border-top-right-radius: 6px;\n"
+"}\n"
+"\n"
+"")
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.tabWidget.setIconSize(QtCore.QSize(20, 20))
@@ -541,6 +593,18 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "    min-width: 8em;\n"
 "    padding: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: inset;\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: outset;\n"
 "}")
         self.searchStudentButton.setObjectName("searchStudentButton")
         self.horizontalLayout_14.addWidget(self.searchStudentButton)
@@ -661,6 +725,18 @@ class Ui_MainWindow(object):
 "    border-color: beige;\n"
 "    font: bold 14px;\n"
 "    color: white;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: inset;\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: outset;\n"
 "}")
         self.deleteStudentButton.setObjectName("deleteStudentButton")
         self.tabWidget.addTab(self.tab, "")
@@ -716,6 +792,18 @@ class Ui_MainWindow(object):
 "    color: white;\n"
 "    min-width: 8em;\n"
 "    padding: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: inset;\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: outset;\n"
 "}")
         self.searchCourseButton.setObjectName("searchCourseButton")
         self.horizontalLayout_10.addWidget(self.searchCourseButton)
@@ -833,6 +921,18 @@ class Ui_MainWindow(object):
 "    font: bold 14px;\n"
 "    color: white;\n"
 "\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: inset;\n"
+"    padding-left: 5px;\n"
+"    padding-top: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #5aa7de;\n"
+"    border-style: outset;\n"
 "}")
         self.deleteCourseButton.setObjectName("deleteCourseButton")
         self.tabWidget.addTab(self.tab_2, "")
