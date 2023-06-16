@@ -99,7 +99,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def add_course_button_clicked(self):
         course_name = self.gui_ssis.enterCourse.text()
         course_code = self.gui_ssis.enterCode.text()
-        self.courseObject.addCourse(course_code, course_name)
+        if self.courseObject.courseCodeExists(course_code) == True:
+                        QtWidgets.QMessageBox.warning(self, "Course Exists", "Course code already exists.")
+        elif not course_code or not course_name:
+            QtWidgets.QMessageBox.warning(self, "Lacking Input", "Please input all details.")
+        else:
+            self.courseObject.addCourse(course_code, course_name)
         
         self.setStandardItemModel()
         self.gui_ssis.CourseTable.model().layoutChanged.emit()
@@ -113,11 +118,14 @@ class MainWindow(QtWidgets.QMainWindow):
         student_gender = self.gui_ssis.chooseGender.currentText()
         student_yearlvl = self.gui_ssis.chooseYearLvl.currentText()        
         student_course = self.gui_ssis.chooseCourse.currentText()
-
-
-        student_course_code = self.courseObject.getCourseCode(student_course)
-
-        self.studentObject.addStudent(student_id, student_name, student_gender, student_yearlvl, student_course_code)
+        if self.studentObject.studentIDExists(student_id) == True:
+                                QtWidgets.QMessageBox.warning(self, "Student ID Exists", "Student ID already exists.")
+        elif not student_name or not student_id:
+            QtWidgets.QMessageBox.warning(self, "Lacking Input", "Please input all details.")
+        else:
+            student_course_code = self.courseObject.getCourseCode(student_course) #to change course name in combo box to course code for table
+            self.studentObject.addStudent(student_id, student_name, student_gender, student_yearlvl, student_course_code)
+            
         self.setStandardItemModel()
         self.gui_ssis.StudentTable.model().layoutChanged.emit()
         self.gui_ssis.enterSName.clear()
@@ -217,7 +225,7 @@ class MainWindow(QtWidgets.QMainWindow):
             reply = QtWidgets.QMessageBox.question(self, "Save Changes", "Do you want to save the changes?",
                                                     QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
             if reply == QtWidgets.QMessageBox.Yes:
-                if column in [1, 3]:   
+                if column in [1]:   
                     self.studentObject.updateStudent( unique_key, column, new_value)
                     self.setStandardItemModel()
                     self.gui_ssis.StudentTable.model().layoutChanged.emit()
@@ -231,6 +239,13 @@ class MainWindow(QtWidgets.QMainWindow):
                 elif column in [2]:
                     if self.studentObject.genderExistsInArray(new_value) == False:
                         QtWidgets.QMessageBox.warning(self, "Input Error", "Gender not in selection. Please input based on here:\n   Male\n   Female\n   Non-Binary\n   Transgender\n   Prefer Not to Say\n   Not Listed")
+                    else:
+                        self.studentObject.updateStudent( unique_key, column, new_value)
+                        self.setStandardItemModel()
+                        self.gui_ssis.StudentTable.model().layoutChanged.emit()
+                elif column in [3]:
+                    if self.studentObject.yearExistsInArray(new_value) == False:
+                        QtWidgets.QMessageBox.warning(self, "Input Error", "Year level not in selection. Please input based on range 1-5.")
                     else:
                         self.studentObject.updateStudent( unique_key, column, new_value)
                         self.setStandardItemModel()
