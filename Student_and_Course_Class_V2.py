@@ -13,7 +13,7 @@ class Course:
     def __init__(self):
         self.columns = ['Course Code', 'Course']
         self.cursor = connection.cursor(buffered=True)
-        self.cursor.execute("SELECT * FROM courses")
+        #self.cursor.execute("SELECT * FROM courses")
     
     def returnCourseData(self):
         self.cursor.execute("SELECT * FROM courses")
@@ -44,7 +44,7 @@ class Course:
         
      # function to display a course
     def displayCourse(self, index):
-        self.cursor.execute("SELECT * FROM courses LIMIT %s",( 1, index ))
+        self.cursor.execute("SELECT * FROM courses LIMIT %s",( 1, index))
         course = self.cursor.fetchone()
         if course:
             print(f"Course: {course[1]}")
@@ -93,7 +93,7 @@ class Course:
         if update_query:
             self.cursor.execute(update_query, (new_value, unique_key))
             connection.commit()
-            print(f"Row updated successfully: {unique_key}")
+            print(f"Row updated successfully: {unique_key} with new change: {new_value}")
         else:
             print("Invalid column selected.") 
 
@@ -129,13 +129,11 @@ class Course:
 
 
 
-
-
 class StudentInfo():
     def __init__(self):
         self.columns = ['Student ID', 'Name', 'Gender', 'Year Level', 'Course']
         self.cursor = connection.cursor(buffered=True)
-        self.cursor.execute("SELECT * FROM student_info")
+        #self.cursor.execute("SELECT * FROM student_info")
 
     def returnStudentData(self):
         self.cursor.execute("SELECT * FROM student_info")
@@ -231,7 +229,7 @@ class StudentInfo():
         if update_query:
             self.cursor.execute(update_query, (new_value, unique_key))
             connection.commit()
-            print(f"Row updated successfully: {unique_key}")
+            print(f"Row updated successfully: {unique_key} with new change: {new_value}")
         else:
             print("Invalid column selected.")
 
@@ -257,6 +255,9 @@ class StudentInfo():
             
     def genderExistsInArray(self, new_value):
         return new_value in self.gender
+    
+    def yearExistsInArray(self, new_value):
+        return new_value in self.year_level
             
     # array of gender and year_level for selection in GUI
     gender = ['Male', 'Female', 'Non-Binary','Transgender', 'Prefer Not to Say', 'Not Listed']
