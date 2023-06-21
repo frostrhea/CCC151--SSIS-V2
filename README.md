@@ -9,5 +9,7 @@
 - V2ssis_gui_main for the GUI functionality and also serves as a bridge between the V2gui_ssis2 and Student_and_Course_class_V2
 
 Used Qt Designer to design GUI (PyQT5 version)
+
 Python version 3.9.5
+
 MySQL Workbench version 8.0.33
