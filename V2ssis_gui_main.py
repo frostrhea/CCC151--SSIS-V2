@@ -14,6 +14,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.gui_ssis = ui
         self.gui_ssis.setupUi(self)
         self.setStandardItemModel()
+        self.selected_column = None
+        
         self.gui_ssis.addCourseButton.clicked.connect(self.add_course_button_clicked)
         self.gui_ssis.enterCode.returnPressed.connect(self.add_course_button_clicked)
         self.gui_ssis.addStudentButton.clicked.connect(self.add_student_button_clicked)
@@ -34,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.gui_ssis.CourseTable.doubleClicked.connect(self.course_table_cell_edit)
         self.gui_ssis.StudentTable.doubleClicked.connect(self.student_table_cell_edit)
         
+        self.gui_ssis.StudentTable.horizontalHeader().sectionClicked.connect(self.column_selected)
 
     def setSModel(self, data, model):
         #rows = cursor.fetchall()
@@ -158,6 +161,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setStandardItemModel()
         self.gui_ssis.StudentTable.model().layoutChanged.emit()
 
+    def column_selected(self, column_index):
+        header = self.gui_ssis.StudentTable.horizontalHeader()
+        selected_column = header.model().headerData(column_index, QtCore.Qt.Horizontal)
+        self.selected_column = selected_column
 
     def search_course_button_clicked(self): 
         search_coursetxt = self.gui_ssis.searchInputCourse.text()
@@ -175,7 +182,13 @@ class MainWindow(QtWidgets.QMainWindow):
             
     def search_student_button_clicked(self): 
         search_studenttxt = self.gui_ssis.searchInputStudent.text()
-        SResults = self.studentObject.searchStudent(search_studenttxt)
+    
+        if self.selected_column is not None:
+            SResults = self.studentObject.searchStudent(self.selected_column, search_studenttxt)
+        else:
+            SResults = self.studentObject.searchStudent(None, search_studenttxt)
+        #
+        # SResults = self.studentObject.searchStudent(search_studenttxt) 
         #print("Results:", SResults) 
         if SResults:
             self.clearModel(self.studentModel)
@@ -185,8 +198,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.adjustTableColumns(self.gui_ssis.StudentTable)
             self.gui_ssis.StudentTable.model().layoutChanged.emit()
         else:
-            QtWidgets.QMessageBox.information(self, "No Results", f"No results found for course '{search_studenttxt}'.")
-    
+            QtWidgets.QMessageBox.information(self, "No Results", f"No results found: '{search_studenttxt}'.")
+
+        self.selected_column = None
     
     def course_table_cell_edit(self, index):
         row = index.row()

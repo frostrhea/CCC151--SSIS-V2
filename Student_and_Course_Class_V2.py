@@ -191,22 +191,37 @@ class StudentInfo():
         print("All students displayed successfully.\n")
         
     # function to search for student data
-    def searchStudent(self, value):
+    def searchStudent(self, column, value):
         value = str(value).lower() + '%'
-        self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Student ID`) LIKE %s OR LOWER(`Name`) LIKE %s OR LOWER(`Gender`) LIKE %s OR LOWER(`Year Level`) LIKE %s OR LOWER(`Course Code`) LIKE %s", 
-                    (f"%{value}", f"%{value}", f"%{value}", f"%{value}", f"%{value}"))
-        searchResults = self.cursor.fetchall()
         
+        if column is not None:
+            if column == 'Gender':
+                self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Gender`) LIKE %s", (f"%{value}",))
+            elif column == 'Student ID':
+                self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Student ID`) LIKE %s", (f"%{value}",))
+            elif column == 'Name':
+                self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Name`) LIKE %s", (f"%{value}",))
+            elif column == 'Year Level':
+                self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Year Level`) LIKE %s", (f"%{value}",))
+            elif column == 'Course Code':
+                self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Course Code`) LIKE %s", (f"%{value}",))
+        else:
+            self.cursor.execute("SELECT * FROM student_info WHERE LOWER(`Student ID`) LIKE %s OR LOWER(`Name`) LIKE %s OR LOWER(`Gender`) LIKE %s OR LOWER(`Year Level`) LIKE %s OR LOWER(`Course Code`) LIKE %s",
+                                (f"%{value}", f"%{value}", f"%{value}", f"%{value}", f"%{value}"))
+        
+        searchResults = self.cursor.fetchall()
+
         if len(searchResults) == 0:
             print("No matching student found.")
         else:
-            print("Seach results: \n")
+            print("Search results:\n")
             for student in searchResults:
-                print(f"ID: {student[0]}")     
+                print(f"ID: {student[0]}")
                 print(f"Name: {student[1]}")
                 print(f"Gender: {student[2]}")
                 print(f"Year Level: {student[3]}")
-                print(f"Course: {student[4]} \n")
+                print(f"Course: {student[4]}\n")
+
         return searchResults
 
     # function to update the student field/cell
